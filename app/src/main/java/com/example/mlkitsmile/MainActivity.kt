@@ -35,14 +35,14 @@ class MainActivity : AppCompatActivity() {
     private lateinit var outputDirectory: File
     private lateinit var cameraExecutor: ExecutorService
     private lateinit var viewFinder: PreviewView
-    private lateinit var face: TextView
+    private lateinit var faceTv: TextView
 
     private var smileResult: String = Constants.WAIT
 
     private val smileListener = object : SmileListener {
         override fun getSmileResult(result: String) {
             smileResult = result
-            face.text = smileResult
+            faceTv.text = smileResult
             if (smileResult == Constants.SMILING_FACE) {
                 takePhoto()
             }
@@ -61,14 +61,14 @@ class MainActivity : AppCompatActivity() {
                 this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS
             )
         }
-
-        viewFinder = findViewById(R.id.viewFinder)
-
-        face = findViewById(R.id.face)
+        bindViews()
         outputDirectory = getOutputDirectory()
-
         cameraExecutor = Executors.newSingleThreadExecutor()
+    }
 
+    private fun bindViews() {
+        viewFinder = findViewById(R.id.viewFinder)
+        faceTv = findViewById(R.id.faceTv)
     }
 
     private fun takePhoto() {
@@ -100,7 +100,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun startCamera() {
         val cameraProviderFuture = ProcessCameraProvider.getInstance(this)
-
         cameraProviderFuture.addListener(Runnable {
             val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
             val imageAnalysis = ImageAnalysis.Builder()

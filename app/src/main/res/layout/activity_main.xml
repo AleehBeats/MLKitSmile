@@ -21,7 +21,7 @@
     </androidx.camera.view.PreviewView>
 
     <TextView
-        android:id="@+id/face"
+        android:id="@+id/faceTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="64dp"
